@@ -6,12 +6,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
-import useTodoState from './hooks/useTodoState';
+import {TodosProvider} from "./context/todos.context";
+
 export default function TodoApp() {
-    const initialTodos = [{id:1, task: "Pet money", completed: false}];
-    const {todos, addTodo, removeTodo, toggleTodo, editTodo} = useTodoState(initialTodos);
-
-
     return (
         <Paper
             style={{
@@ -31,13 +28,10 @@ export default function TodoApp() {
             {/*  addTodo is a functoin defined above thats passed to the form */}
             {/* it receives an value from useInputState on the todoform component*/}
             {/* that value is the text of the new todo*/}
-            <TodoForm addTodo={addTodo}/>
-            <TodoList
-                todos={todos}
-                remove={removeTodo}
-                toggleTodo={toggleTodo}
-                editTodo={editTodo}
-            />
+                    <TodosProvider>
+                        <TodoForm/>
+                        <TodoList/>
+                    </TodosProvider>
                 </Grid>
             </Grid>
         </Paper>
